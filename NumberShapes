@@ -1,0 +1,85 @@
+package com.jfletcher.triangleorsquarenumber;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    public void getAnswer(View view) {
+
+        int t = 1;
+        int ti;
+        int x = 1;
+        int tr;
+        int squareNum;
+        String resultStr = "";
+
+        EditText enteredNum = (EditText) findViewById(R.id.enterNumber);
+
+        if (enteredNum.getText().toString().isEmpty()) {
+
+            resultStr = "Please enter a number!!";
+
+        } else {
+
+            int pni = Integer.parseInt(enteredNum.getText().toString());
+
+            ti = pni;
+
+            System.out.println(pni);
+
+
+            while (x > 0) {
+
+                ti = ti - t;
+                t++;
+                x = ti;
+            }
+            if (x == 0) {
+                tr = 1;
+            } else {
+                tr = 0;
+            }
+
+            double sr = Math.sqrt(pni);
+            double srr = sr - Math.round(sr);
+            if (srr == 0) {
+                squareNum = 10;
+            } else {
+                squareNum = 0;
+            }
+
+            int result = tr + squareNum;
+
+            if (result == 11) {
+                resultStr = pni + " is both Triangular Number and Square Number";
+            } else {
+                if (result == 10) {
+                    resultStr = pni + " is a Square Number but not Triangular Number";
+                } else {
+                    if (result == 1) {
+                        resultStr = pni + " is a Triangular Number but not Square Number";
+                    } else {
+                        resultStr = pni + " is Neither Triangular or Square Number";
+                    }
+                }
+            }
+
+        }
+
+        System.out.println(resultStr);
+        Toast.makeText(getApplicationContext(), resultStr, Toast.LENGTH_LONG).show();
+
+
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+}
