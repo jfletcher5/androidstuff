@@ -6,7 +6,7 @@ Notes on Custom Methods: example below:
  - void if returning no value
       - if returning a value, you must have a 'return' piece of code somewhere in the method
       - 
-
+{
 public void savePlayer (View view){
 
         Log.i("test", "test");
@@ -27,3 +27,5 @@ public void savePlayer (View view){
 
         listView.setAdapter(myAdapter);
     }
+    
+   }
