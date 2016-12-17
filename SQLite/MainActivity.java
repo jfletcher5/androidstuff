@@ -9,21 +9,24 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    DatabaseHelper peopleDB;
+    
+    //You may need to go through and change column names, number of columns, etc
+    
+    DatabaseHelper myDB;
 
     Button btnAddData, btnViewData,btnUpdateData,btnDelete;
-    EditText etName,etEmail,etTVShow,etID;
+    EditText etCol1,etCol2,etCol3,etID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        peopleDB = new DatabaseHelper(this);
+        myDB = new DatabaseHelper(this);
 
-        etName = (EditText) findViewById(R.id.etNewName);
-        etEmail = (EditText) findViewById(R.id.etNewEmail);
-        etTVShow = (EditText) findViewById(R.id.etNewTvShow);
+        etCol1 = (EditText) findViewById(R.id.etCol1);
+        etCol2 = (EditText) findViewById(R.id.etCol1);
+        etCol3 = (EditText) findViewById(R.id.etCol3);
         btnAddData = (Button) findViewById(R.id.btnAddData);
         btnViewData = (Button) findViewById(R.id.btnViewData);
         btnUpdateData = (Button) findViewById(R.id.btnUpdateData);
@@ -41,11 +44,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String name = etName.getText().toString();
-                String email = etEmail.getText().toString();
-                String tvShow = etTVShow.getText().toString();
+                String name = etCol1.getText().toString();
+                String email = etCol2.getText().toString();
+                String tvShow = etCol3.getText().toString();
 
-                boolean insertData = peopleDB.addData(name, email, tvShow);
+                boolean insertData = myDB.addData(name, email, tvShow);
 
                 if (insertData == true) {
                     Toast.makeText(MainActivity.this, "Data Successfully Inserted!", Toast.LENGTH_LONG).show();
@@ -60,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         btnViewData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor data = peopleDB.showData();
+                Cursor data = myDB.showData();
 
                 if (data.getCount() == 0) {
                     display("Error", "No Data Found.");
