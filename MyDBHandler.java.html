@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>MyDBHandler.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(104,151,187); }
+.s3 { color: rgb(106,135,89); }
+.s4 { color: rgb(128,128,128); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MyDBHandler.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.jfletcher.braingame</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+</span><span class="s0">import </span><span class="s1">android.content.ContentValues</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.database.Cursor</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.database.sqlite.SQLiteDatabase</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.database.sqlite.SQLiteOpenHelper</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">java.io.StringBufferInputStream</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">MyDBHandler </span><span class="s0">extends </span><span class="s1">SQLiteOpenHelper{ 
+ 
+    </span><span class="s0">private static final int </span><span class="s1">DATABASE_VERSION = </span><span class="s2">5</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">private static final </span><span class="s1">String DATABASE_NAME = </span><span class="s3">&quot;highScores.db&quot;</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public static final </span><span class="s1">String TABLE_HIGHSCORES = </span><span class="s3">&quot;HighScores&quot;</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public static final </span><span class="s1">String COLUMN_ID = </span><span class="s3">&quot;_id&quot;</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public static final </span><span class="s1">String COLUMN_NAME = </span><span class="s3">&quot;_username&quot;</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">public static final </span><span class="s1">String COLUMN_SCORE = </span><span class="s3">&quot;_score&quot;</span><span class="s0">;</span><span class="s1"> 
+ 
+    </span><span class="s4">//we need to pass database info along to the superclass</span><span class="s1"> 
+    </span><span class="s0">public </span><span class="s1">MyDBHandler(Context context</span><span class="s0">, </span><span class="s1">String name</span><span class="s0">, </span><span class="s1">SQLiteDatabase.CursorFactory factory</span><span class="s0">, int </span><span class="s1">version) { </span><span class="s4">//, String name, SQLiteDatabase.CursorFactory factory, int version</span><span class="s1"> 
+        </span><span class="s0">super</span><span class="s1">(context</span><span class="s0">, </span><span class="s1">DATABASE_NAME</span><span class="s0">, </span><span class="s1">factory</span><span class="s0">, </span><span class="s1">DATABASE_VERSION)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onCreate(SQLiteDatabase db) { 
+        String query = </span><span class="s3">&quot;CREATE TABLE &quot; </span><span class="s1">+ TABLE_HIGHSCORES + </span><span class="s3">&quot;(&quot; </span><span class="s1">+ 
+                COLUMN_ID + </span><span class="s3">&quot; INTEGER PRIMARY KEY AUTOINCREMENT, &quot; </span><span class="s1">+ 
+                COLUMN_NAME + </span><span class="s3">&quot; TEXT, &quot; </span><span class="s1">+ 
+                COLUMN_SCORE + </span><span class="s3">&quot; INTEGER&quot; </span><span class="s1">+ 
+                </span><span class="s3">&quot;);&quot;</span><span class="s0">;</span><span class="s1"> 
+        db.execSQL(query)</span><span class="s0">;</span><span class="s1"> 
+        Log.e(</span><span class="s3">&quot;DB Status&quot;</span><span class="s0">, </span><span class="s3">&quot;DB created...&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onUpgrade(SQLiteDatabase db</span><span class="s0">, int </span><span class="s1">i</span><span class="s0">, int </span><span class="s1">i1) { 
+        db.execSQL(</span><span class="s3">&quot;DROP TABLE IF EXISTS &quot; </span><span class="s1">+ TABLE_HIGHSCORES)</span><span class="s0">;</span><span class="s1"> 
+        onCreate(db)</span><span class="s0">;</span><span class="s1"> 
+        Log.e(</span><span class="s3">&quot;DB Status&quot;</span><span class="s0">, </span><span class="s3">&quot;DB Upgraded...&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s4">//add new row to the DB</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">addHighScore(<a href="HighScore.java.html">HighScore</a> highScore){ 
+        ContentValues values = </span><span class="s0">new </span><span class="s1">ContentValues()</span><span class="s0">;</span><span class="s1"> 
+        values.put(COLUMN_NAME</span><span class="s0">, </span><span class="s1">highScore.get_username())</span><span class="s0">;</span><span class="s1"> 
+        values.put(COLUMN_SCORE</span><span class="s0">, </span><span class="s1">highScore.get_score())</span><span class="s0">;</span><span class="s1"> 
+        SQLiteDatabase db = getWritableDatabase()</span><span class="s0">;</span><span class="s1"> 
+        db.insert(TABLE_HIGHSCORES</span><span class="s0">, null, </span><span class="s1">values)</span><span class="s0">;</span><span class="s1"> 
+        db.close()</span><span class="s0">;</span><span class="s1"> 
+        Log.e(</span><span class="s3">&quot;DB Status&quot;</span><span class="s0">, </span><span class="s3">&quot;Row added to DB...&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+    } 
+ 
+    </span><span class="s4">//delete from db table</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">deleteHighScore (String user){ 
+        SQLiteDatabase db = getWritableDatabase()</span><span class="s0">;</span><span class="s1"> 
+        db.execSQL(</span><span class="s3">&quot;DELETE FROM &quot; </span><span class="s1">+ TABLE_HIGHSCORES + </span><span class="s3">&quot; WHERE &quot; </span><span class="s1">+ 
+                COLUMN_NAME + </span><span class="s3">&quot; =</span><span class="s0">\&quot;</span><span class="s3">&quot; </span><span class="s1">+ user + </span><span class="s3">&quot;</span><span class="s0">\&quot;</span><span class="s3">;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        Log.e(</span><span class="s3">&quot;DB Status&quot;</span><span class="s0">, </span><span class="s3">&quot;Row deleted from DB...&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+    } 
+ 
+    </span><span class="s4">//print db as string</span><span class="s1"> 
+     </span><span class="s0">public </span><span class="s1">String databaseToString (){ 
+ 
+         </span><span class="s4">//get db information</span><span class="s1"> 
+         SQLiteDatabase db = getWritableDatabase()</span><span class="s0">;</span><span class="s1"> 
+         </span><span class="s4">//Cursor c;</span><span class="s1"> 
+         </span><span class="s4">//String [] projections = {COLUMN_NAME, COLUMN_SCORE};</span><span class="s1"> 
+         </span><span class="s4">//c = db.query(TABLE_HIGHSCORES, projections, null, null, null, null,null);</span><span class="s1"> 
+         </span><span class="s4">//return c;</span><span class="s1"> 
+ 
+         String dbString = </span><span class="s3">&quot;&quot;</span><span class="s0">;</span><span class="s1"> 
+ 
+         String query = </span><span class="s3">&quot;SELECT * FROM &quot; </span><span class="s1">+ TABLE_HIGHSCORES</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+         </span><span class="s4">//Cursor point to a location in your results</span><span class="s1"> 
+         Cursor c = db.rawQuery(query</span><span class="s0">, null</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+         </span><span class="s4">// Move to the first row in result</span><span class="s1"> 
+         c.moveToFirst()</span><span class="s0">;</span><span class="s1"> 
+ 
+         </span><span class="s0">while</span><span class="s1">(!c.isAfterLast()){ 
+             </span><span class="s4">//null can happen if we use the empty constructor</span><span class="s1"> 
+             </span><span class="s0">if </span><span class="s1">(c.getString(c.getColumnIndex(COLUMN_SCORE))!=</span><span class="s0">null</span><span class="s1">){ 
+                 dbString += c.getString(c.getColumnIndex(COLUMN_NAME))</span><span class="s0">;</span><span class="s1"> 
+                 dbString += c.getInt(c.getColumnIndex(COLUMN_SCORE))</span><span class="s0">;</span><span class="s1"> 
+                 dbString += </span><span class="s3">&quot;</span><span class="s0">\n</span><span class="s3">&quot;</span><span class="s0">;</span><span class="s1"> 
+             } 
+             c.moveToNext()</span><span class="s0">;</span><span class="s1"> 
+         } 
+         db.close()</span><span class="s0">;</span><span class="s1"> 
+         </span><span class="s0">return </span><span class="s1">dbString</span><span class="s0">;</span><span class="s1"> 
+ 
+     } 
+ 
+ 
+ 
+} 
+</span></pre>
+</body>
+</html>

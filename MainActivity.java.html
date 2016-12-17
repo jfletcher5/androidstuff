@@ -1,0 +1,324 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(104,151,187); }
+.s3 { color: rgb(128,128,128); }
+.s4 { color: rgb(106,135,89); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.jfletcher.braingame</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">android.content.*</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.SharedPreferences</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.database.Cursor</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.CountDownTimer</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.annotation.IntegerRes</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.*</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.EditText</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">java.util.Random</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    <a href="MyDBHandler.java.html">MyDBHandler</a> myDBHandler</span><span class="s0">;</span><span class="s1"> 
+    EditText userEditText</span><span class="s0">;</span><span class="s1"> 
+    TextView timerTextView</span><span class="s0">;</span><span class="s1"> 
+    String timerText</span><span class="s0">;</span><span class="s1"> 
+    TextView scoreTextView</span><span class="s0">;</span><span class="s1"> 
+    String scoreText</span><span class="s0">;</span><span class="s1"> 
+    TextView mathTextView</span><span class="s0">;</span><span class="s1"> 
+    String mathText</span><span class="s0">;</span><span class="s1"> 
+    TextView field1</span><span class="s0">;</span><span class="s1"> 
+    TextView field2</span><span class="s0">;</span><span class="s1"> 
+    TextView field3</span><span class="s0">;</span><span class="s1"> 
+    TextView field4</span><span class="s0">;</span><span class="s1"> 
+    String viewText</span><span class="s0">;</span><span class="s1"> 
+    String message</span><span class="s0">;</span><span class="s1"> 
+    Button b</span><span class="s0">;</span><span class="s1"> 
+    String username</span><span class="s0">;</span><span class="s1"> 
+    SharedPreferences savedScores</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">timerMax = </span><span class="s2">15</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">rn</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">xm</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">answer</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">wrongAnswer1</span><span class="s0">;</span><span class="s1"> 
+    String wrongAnswer1Text</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">wrongAnswer2</span><span class="s0">;</span><span class="s1"> 
+    String wrongAnswer2Text</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">wrongAnswer3</span><span class="s0">;</span><span class="s1"> 
+    String wrongAnswer3Text</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">correctAnswer</span><span class="s0">;</span><span class="s1"> 
+    String correctAnswerText</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">points</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">problemTotal</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">min = </span><span class="s2">1</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">max = </span><span class="s2">6</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+    </span><span class="s0">public void </span><span class="s1">setProblem () { 
+ 
+        field1 = (TextView) findViewById(R.id.field1)</span><span class="s0">;</span><span class="s1"> 
+        field2 = (TextView) findViewById(R.id.field2)</span><span class="s0">;</span><span class="s1"> 
+        field3 = (TextView) findViewById(R.id.field3)</span><span class="s0">;</span><span class="s1"> 
+        field4 = (TextView) findViewById(R.id.field4)</span><span class="s0">;</span><span class="s1"> 
+        mathTextView = (TextView) findViewById(R.id.mathProblem)</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s3">// Setting Random numbers and getting answer</span><span class="s1"> 
+        Random r = </span><span class="s0">new </span><span class="s1">Random ()</span><span class="s0">;</span><span class="s1"> 
+        rn = r.nextInt(max - min + </span><span class="s2">1</span><span class="s1">) + min</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">randNum1 = rn</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s3">//second number set</span><span class="s1"> 
+        rn = r.nextInt(max - min + </span><span class="s2">1</span><span class="s1">) + min</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">randNum2 = rn</span><span class="s0">;</span><span class="s1"> 
+        correctAnswer = randNum1 + randNum2</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">if </span><span class="s1">(correctAnswer&lt;</span><span class="s2">10</span><span class="s1">){ 
+            correctAnswerText = </span><span class="s4">&quot;0&quot; </span><span class="s1">+ Integer.toString(correctAnswer)</span><span class="s0">;</span><span class="s1"> 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            correctAnswerText = Integer.toString(correctAnswer)</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s3">//set problem to equal answer</span><span class="s1"> 
+        mathText = Integer.toString(randNum1) + </span><span class="s4">&quot; + &quot; </span><span class="s1">+ Integer.toString(randNum2)</span><span class="s0">;</span><span class="s1"> 
+        mathTextView.setText(mathText)</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s3">//set one box to correct answer</span><span class="s1"> 
+        rn = r.nextInt(</span><span class="s2">4</span><span class="s1">-</span><span class="s2">1</span><span class="s1">+</span><span class="s2">1</span><span class="s1">)+</span><span class="s2">1</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(rn == </span><span class="s2">1</span><span class="s1">){ 
+            field1.setText(correctAnswerText)</span><span class="s0">;</span><span class="s1"> 
+        } </span><span class="s0">else if </span><span class="s1">(rn == </span><span class="s2">2</span><span class="s1">){ 
+            field2.setText(correctAnswerText)</span><span class="s0">;</span><span class="s1"> 
+        } </span><span class="s0">else if </span><span class="s1">(rn == </span><span class="s2">3</span><span class="s1">){ 
+            field3.setText(correctAnswerText)</span><span class="s0">;</span><span class="s1"> 
+        } </span><span class="s0">else if </span><span class="s1">(rn == </span><span class="s2">4</span><span class="s1">){ 
+            field4.setText(correctAnswerText)</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s3">//set other boxes to random numbers</span><span class="s1"> 
+        wrongAnswer1 = r.nextInt(</span><span class="s2">12</span><span class="s1">-</span><span class="s2">2</span><span class="s1">+</span><span class="s2">1</span><span class="s1">)+</span><span class="s2">2</span><span class="s0">;</span><span class="s1"> 
+        wrongAnswer2 = r.nextInt(</span><span class="s2">12</span><span class="s1">-</span><span class="s2">2</span><span class="s1">+</span><span class="s2">1</span><span class="s1">)+</span><span class="s2">2</span><span class="s0">;</span><span class="s1"> 
+        wrongAnswer3 = r.nextInt(</span><span class="s2">12</span><span class="s1">-</span><span class="s2">2</span><span class="s1">+</span><span class="s2">1</span><span class="s1">)+</span><span class="s2">2</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">while </span><span class="s1">(wrongAnswer1 == correctAnswer) { 
+            wrongAnswer1 = r.nextInt(</span><span class="s2">12</span><span class="s1">-</span><span class="s2">2</span><span class="s1">+</span><span class="s2">1</span><span class="s1">)+</span><span class="s2">2</span><span class="s0">;</span><span class="s1"> 
+        } 
+        </span><span class="s0">while </span><span class="s1">(wrongAnswer2 == correctAnswer){ 
+            wrongAnswer2 = r.nextInt(</span><span class="s2">12</span><span class="s1">-</span><span class="s2">2</span><span class="s1">+</span><span class="s2">1</span><span class="s1">)+</span><span class="s2">2</span><span class="s0">;</span><span class="s1"> 
+        } 
+        </span><span class="s0">while </span><span class="s1">(wrongAnswer3 == correctAnswer){ 
+            wrongAnswer3 = r.nextInt(</span><span class="s2">12</span><span class="s1">-</span><span class="s2">2</span><span class="s1">+</span><span class="s2">1</span><span class="s1">)+</span><span class="s2">2</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        </span><span class="s3">//format single digits</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(wrongAnswer1&lt;</span><span class="s2">10</span><span class="s1">){ 
+            wrongAnswer1Text = </span><span class="s4">&quot;0&quot; </span><span class="s1">+ Integer.toString(wrongAnswer1)</span><span class="s0">;</span><span class="s1"> 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            wrongAnswer1Text = Integer.toString(wrongAnswer1)</span><span class="s0">;</span><span class="s1"> 
+        } 
+        </span><span class="s0">if </span><span class="s1">(wrongAnswer2&lt;</span><span class="s2">10</span><span class="s1">){ 
+            wrongAnswer2Text = </span><span class="s4">&quot;0&quot; </span><span class="s1">+ Integer.toString(wrongAnswer2)</span><span class="s0">;</span><span class="s1"> 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            wrongAnswer2Text = Integer.toString(wrongAnswer2)</span><span class="s0">;</span><span class="s1"> 
+        } 
+        </span><span class="s0">if </span><span class="s1">(wrongAnswer3&lt;</span><span class="s2">10</span><span class="s1">){ 
+            wrongAnswer3Text = </span><span class="s4">&quot;0&quot; </span><span class="s1">+ Integer.toString(wrongAnswer3)</span><span class="s0">;</span><span class="s1"> 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            wrongAnswer3Text = Integer.toString(wrongAnswer3)</span><span class="s0">;</span><span class="s1"> 
+        } 
+         
+ 
+        </span><span class="s0">if </span><span class="s1">(rn == </span><span class="s2">1</span><span class="s1">){ 
+            field2.setText(wrongAnswer1Text)</span><span class="s0">;</span><span class="s1"> 
+            field3.setText(wrongAnswer2Text)</span><span class="s0">;</span><span class="s1"> 
+            field4.setText(wrongAnswer3Text)</span><span class="s0">;</span><span class="s1"> 
+        } </span><span class="s0">else if </span><span class="s1">(rn == </span><span class="s2">2</span><span class="s1">){ 
+            field1.setText(wrongAnswer1Text)</span><span class="s0">;</span><span class="s1"> 
+            field3.setText(wrongAnswer2Text)</span><span class="s0">;</span><span class="s1"> 
+            field4.setText(wrongAnswer3Text)</span><span class="s0">;</span><span class="s1"> 
+        } </span><span class="s0">else if </span><span class="s1">(rn == </span><span class="s2">3</span><span class="s1">){ 
+            field1.setText(wrongAnswer1Text)</span><span class="s0">;</span><span class="s1"> 
+            field2.setText(wrongAnswer2Text)</span><span class="s0">;</span><span class="s1"> 
+            field4.setText(wrongAnswer3Text)</span><span class="s0">;</span><span class="s1"> 
+        } </span><span class="s0">else if </span><span class="s1">(rn == </span><span class="s2">4</span><span class="s1">){ 
+            field1.setText(wrongAnswer1Text)</span><span class="s0">;</span><span class="s1"> 
+            field2.setText(wrongAnswer2Text)</span><span class="s0">;</span><span class="s1"> 
+            field3.setText(wrongAnswer3Text)</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        Log.i(</span><span class="s4">&quot;math problem&quot;</span><span class="s0">, </span><span class="s1">mathText)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">setScore(){ 
+ 
+        </span><span class="s0">if </span><span class="s1">(checkAnswer()){ 
+            </span><span class="s3">//add point and to total</span><span class="s1"> 
+            points++</span><span class="s0">;</span><span class="s1"> 
+            problemTotal++</span><span class="s0">;</span><span class="s1"> 
+            Log.i(</span><span class="s4">&quot;Answer&quot;</span><span class="s0">, </span><span class="s4">&quot;True&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s3">//add to total</span><span class="s1"> 
+            problemTotal++</span><span class="s0">;</span><span class="s1"> 
+            Log.i(</span><span class="s4">&quot;Answer&quot;</span><span class="s0">, </span><span class="s4">&quot;False&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        } 
+ 
+        scoreText = Integer.toString(points) + </span><span class="s4">&quot;/&quot; </span><span class="s1">+ Integer.toString(problemTotal)</span><span class="s0">;</span><span class="s1"> 
+        scoreTextView.setText(scoreText)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public boolean </span><span class="s1">checkAnswer() { 
+        </span><span class="s3">//mathTextView = (TextView) findViewById(R.id.mathProblem);</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(answer == correctAnswer) { 
+            </span><span class="s0">return  true;</span><span class="s1"> 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">return false;</span><span class="s1"> 
+        } 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">selected(View view){ 
+ 
+        </span><span class="s3">// Finding TextField name and Text of box clicked</span><span class="s1"> 
+ 
+        TextView thisView = (TextView) findViewById(view.getId())</span><span class="s0">;</span><span class="s1"> 
+        viewText = thisView.getText().toString()</span><span class="s0">;</span><span class="s1"> 
+        answer = Integer.parseInt(viewText)</span><span class="s0">;</span><span class="s1"> 
+ 
+        String boxSelected = view.getResources().getResourceEntryName(view.getId())</span><span class="s0">;</span><span class="s1"> 
+        Log.i(</span><span class="s4">&quot;Box selected&quot;</span><span class="s0">, </span><span class="s1">boxSelected)</span><span class="s0">;</span><span class="s1"> 
+        Log.i(</span><span class="s4">&quot;Text&quot;</span><span class="s0">, </span><span class="s1">viewText)</span><span class="s0">;</span><span class="s1"> 
+ 
+        setScore()</span><span class="s0">;</span><span class="s1"> 
+        setProblem()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">playGame(View view) { 
+ 
+        Log.i(</span><span class="s4">&quot;play&quot;</span><span class="s0">, </span><span class="s4">&quot;Yes&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        setProblem()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">new </span><span class="s1">CountDownTimer(timerMax * </span><span class="s2">1000</span><span class="s0">, </span><span class="s2">1000</span><span class="s1">) { 
+ 
+ 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onTick(</span><span class="s0">long </span><span class="s1">l) { 
+ 
+                timerTextView = (TextView) findViewById(R.id.timer)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s0">if </span><span class="s1">(l &lt; </span><span class="s2">10000</span><span class="s1">) { 
+                    timerText = </span><span class="s4">&quot;00:0&quot; </span><span class="s1">+ Long.toString(l / </span><span class="s2">1000</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                } </span><span class="s0">else </span><span class="s1">{ 
+                    timerText = </span><span class="s4">&quot;00:&quot; </span><span class="s1">+ Long.toString(l / </span><span class="s2">1000</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                } 
+                timerTextView.setText(timerText)</span><span class="s0">;</span><span class="s1"> 
+            } 
+ 
+ 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onFinish() { 
+ 
+                timerTextView.setText(</span><span class="s4">&quot;00:00&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                </span><span class="s3">//change button to reset</span><span class="s1"> 
+                b = (Button) findViewById(R.id.playButton)</span><span class="s0">;</span><span class="s1"> 
+                message = </span><span class="s4">&quot;Play Again&quot;</span><span class="s0">;</span><span class="s1"> 
+                b.setText(message)</span><span class="s0">;</span><span class="s1"> 
+ 
+                addToDB()</span><span class="s0">;</span><span class="s1"> 
+                Intent i = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, <a href="Pop.java.html">Pop</a></span><span class="s1">.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                i.putExtra(</span><span class="s4">&quot;key&quot;</span><span class="s0">, </span><span class="s4">&quot;Value&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+                i.putExtra(</span><span class="s4">&quot;points&quot;</span><span class="s0">, </span><span class="s1">points)</span><span class="s0">;</span><span class="s1"> 
+                i.putExtra(</span><span class="s4">&quot;total&quot;</span><span class="s0">, </span><span class="s1">problemTotal)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+                startActivity(i)</span><span class="s0">;</span><span class="s1"> 
+                resetGame()</span><span class="s0">;</span><span class="s1"> 
+            } 
+        }.start()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s3">//add to database</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">addToDB (){ 
+ 
+        username = userEditText.getText().toString()</span><span class="s0">;</span><span class="s1"> 
+ 
+        <a href="HighScore.java.html">HighScore</a> highscore = </span><span class="s0">new <a href="HighScore.java.html">HighScore</a></span><span class="s1">(username</span><span class="s0">, </span><span class="s1">points)</span><span class="s0">;</span><span class="s1"> 
+        myDBHandler.addHighScore(highscore)</span><span class="s0">;</span><span class="s1"> 
+        printDatabase()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s3">// delete item</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">deleteScore(){ 
+        String inputName = username</span><span class="s0">;</span><span class="s1"> 
+        myDBHandler.deleteHighScore(inputName)</span><span class="s0">;</span><span class="s1"> 
+        printDatabase()</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">printDatabase(){ 
+        String c = myDBHandler.databaseToString()</span><span class="s0">;</span><span class="s1"> 
+        TextView hsList = (TextView) findViewById(R.id.hsList)</span><span class="s0">;</span><span class="s1"> 
+        hsList.setText(c)</span><span class="s0">;</span><span class="s1"> 
+ 
+        Log.i(</span><span class="s4">&quot;DB Results&quot;</span><span class="s0">, </span><span class="s1">c)</span><span class="s0">;</span><span class="s1"> 
+ 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">viewHighScores (View view){ 
+ 
+        Intent intent = </span><span class="s0">new </span><span class="s1">Intent(</span><span class="s0">this, <a href="DataListActivity.java.html">DataListActivity</a></span><span class="s1">.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        startActivity(intent)</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">resetGame (){ 
+ 
+        field1.setText(</span><span class="s4">&quot;00&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        field2.setText(</span><span class="s4">&quot;00&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        field3.setText(</span><span class="s4">&quot;00&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        field4.setText(</span><span class="s4">&quot;00&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        timerTextView.setText(</span><span class="s4">&quot;00:&quot; </span><span class="s1">+ timerMax)</span><span class="s0">;</span><span class="s1"> 
+        mathTextView.setText(</span><span class="s4">&quot; &quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        scoreTextView.setText(</span><span class="s4">&quot;0/0&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        points = </span><span class="s2">0</span><span class="s0">;</span><span class="s1"> 
+        problemTotal = </span><span class="s2">0</span><span class="s0">;</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+        setContentView(R.layout.activity_main)</span><span class="s0">;</span><span class="s1"> 
+ 
+        userEditText = (EditText) findViewById(R.id.userName)</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s3">//set timer</span><span class="s1"> 
+        timerTextView = (TextView) findViewById(R.id.timer)</span><span class="s0">;</span><span class="s1"> 
+         message = </span><span class="s4">&quot;00:&quot; </span><span class="s1">+ Integer.toString(timerMax)</span><span class="s0">;</span><span class="s1"> 
+        timerTextView.setText(message)</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s3">//set score</span><span class="s1"> 
+        scoreTextView = (TextView) findViewById(R.id.score)</span><span class="s0">;</span><span class="s1"> 
+        points = </span><span class="s2">0</span><span class="s0">;</span><span class="s1"> 
+        problemTotal = </span><span class="s2">0</span><span class="s0">;</span><span class="s1"> 
+        scoreText = Integer.toString(points) + </span><span class="s4">&quot;/&quot; </span><span class="s1">+ Integer.toString(problemTotal)</span><span class="s0">;</span><span class="s1"> 
+        scoreTextView.setText(scoreText)</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s3">//print initial db results</span><span class="s1"> 
+        myDBHandler = </span><span class="s0">new <a href="MyDBHandler.java.html">MyDBHandler</a></span><span class="s1">(</span><span class="s0">this, null, null, </span><span class="s2">1</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        printDatabase()</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+ 
+    } 
+} 
+</span></pre>
+</body>
+</html>

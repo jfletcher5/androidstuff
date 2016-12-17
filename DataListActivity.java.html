@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>DataListActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(128,128,128); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+DataListActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.jfletcher.braingame</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">android.database.Cursor</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.database.sqlite.SQLiteDatabase</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.ListView</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">DataListActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    ListView listView</span><span class="s0">;</span><span class="s1"> 
+    SQLiteDatabase sqLiteDatabase</span><span class="s0">;</span><span class="s1"> 
+    <a href="MyDBHandler.java.html">MyDBHandler</a> myDBHandler</span><span class="s0">;</span><span class="s1"> 
+    Cursor cursor</span><span class="s0">;</span><span class="s1"> 
+    <a href="ListDataAdapter.java.html">ListDataAdapter</a> listDataAdapter</span><span class="s0">;</span><span class="s1"> 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+        setContentView(R.layout.activity_data_list_two)</span><span class="s0">;</span><span class="s1"> 
+ 
+        listView = (ListView) findViewById(R.id.list_view)</span><span class="s0">;</span><span class="s1"> 
+        listDataAdapter = </span><span class="s0">new <a href="ListDataAdapter.java.html">ListDataAdapter</a></span><span class="s1">(getApplicationContext()</span><span class="s0">, </span><span class="s1">R.layout.row_layout)</span><span class="s0">;</span><span class="s1"> 
+        listView.setAdapter(listDataAdapter)</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s2">/*myDBHandler = new MyDBHandler(this, null, null, 1); 
+        sqLiteDatabase = myDBHandler.getReadableDatabase(); 
+        cursor = myDBHandler.databaseToString(sqLiteDatabase); 
+        if(cursor.moveToFirst()){ 
+            do { 
+                String name,int score; 
+                name = cursor.getString(0); 
+                score = cursor.getInt(1); 
+ 
+            } while (cursor.moveToNext()); 
+        }*/</span><span class="s1"> 
+ 
+    } 
+} 
+</span></pre>
+</body>
+</html>

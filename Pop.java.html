@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>Pop.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(204,120,50); }
+.s1 { color: rgb(169,183,198); }
+.s2 { color: rgb(98,151,85); font-style: italic; }
+.s3 { color: rgb(128,128,128); }
+.s4 { color: rgb(106,135,89); }
+.s5 { color: rgb(104,151,187); }
+</style>
+</head>
+<BODY BGCOLOR="#2b2b2b">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+Pop.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.jfletcher.braingame</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s0">import </span><span class="s1">android.app.Activity</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.hardware.display.DisplayManager</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.DisplayMetrics</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span><span class="s1"> 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span><span class="s1"> 
+ 
+</span><span class="s2">/** 
+ * Created by jondf on 12/13/2016. 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">Pop </span><span class="s0">extends </span><span class="s1">Activity { 
+ 
+    </span><span class="s3">//record scoring</span><span class="s1"> 
+    TextView ScoreTextView</span><span class="s0">;</span><span class="s1"> 
+    String ScoreText</span><span class="s0">;</span><span class="s1"> 
+    TextView PointsText</span><span class="s0">;</span><span class="s1"> 
+    String value</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">points</span><span class="s0">;</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">total</span><span class="s0">;</span><span class="s1"> 
+    Bundle extras = </span><span class="s0">new </span><span class="s1">Bundle()</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span><span class="s1"> 
+ 
+        setContentView(R.layout.popupwindow)</span><span class="s0">;</span><span class="s1"> 
+ 
+        DisplayMetrics dm = </span><span class="s0">new </span><span class="s1">DisplayMetrics()</span><span class="s0">;</span><span class="s1"> 
+        getWindowManager().getDefaultDisplay().getMetrics(dm)</span><span class="s0">;</span><span class="s1"> 
+ 
+        </span><span class="s0">int </span><span class="s1">width = dm.widthPixels</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">height = dm.heightPixels</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+        extras = getIntent().getExtras()</span><span class="s0">;</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(extras != </span><span class="s0">null</span><span class="s1">) { 
+            points = extras.getInt(</span><span class="s4">&quot;points&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            total = extras.getInt(</span><span class="s4">&quot;total&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            value = extras.getString(</span><span class="s4">&quot;key&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+            </span><span class="s3">//The key argument here must match that used in the other activity</span><span class="s1"> 
+        } 
+ 
+        Log.i(</span><span class="s4">&quot;Pull&quot;</span><span class="s0">, </span><span class="s1">value)</span><span class="s0">;</span><span class="s1"> 
+        Log.i(</span><span class="s4">&quot;Points&quot;</span><span class="s0">, </span><span class="s1">Integer.toString(points))</span><span class="s0">;</span><span class="s1"> 
+        Log.i(</span><span class="s4">&quot;Tries&quot;</span><span class="s0">, </span><span class="s1">Integer.toString(total))</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+        TextView scoreTextView = (TextView) findViewById(R.id.totalProblemsPop)</span><span class="s0">;</span><span class="s1"> 
+        scoreTextView.setText(</span><span class="s4">&quot;Out of &quot; </span><span class="s1">+ total + </span><span class="s4">&quot; problems!&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+        TextView pointsText = (TextView) findViewById(R.id.pointPop)</span><span class="s0">;</span><span class="s1"> 
+        pointsText.setText(</span><span class="s4">&quot;You scored &quot; </span><span class="s1">+ points +</span><span class="s4">&quot; points!&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s1"> 
+ 
+ 
+        getWindow().setLayout((</span><span class="s0">int</span><span class="s1">) (width*</span><span class="s5">0.75</span><span class="s1">)</span><span class="s0">,</span><span class="s1">(</span><span class="s0">int</span><span class="s1">) (height*</span><span class="s5">0.75</span><span class="s1">))</span><span class="s0">;</span><span class="s1"> 
+ 
+    } 
+} 
+</span></pre>
+</body>
+</html>
