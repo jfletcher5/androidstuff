@@ -1,5 +1,3 @@
-package practice.application.sqlitesaveuserdata;
-
 import android.app.AlertDialog;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
